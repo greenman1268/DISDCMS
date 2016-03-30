@@ -39,7 +39,7 @@ public class MainFrameServlet extends HttpServlet
             try {
                 Person p = new Person();
                 p.setPersonId(0);
-                Collection groups = ManagementSystem.getInstance().getGroups();
+                Collection departments = ManagementSystem.getInstance().getDepartments();
                 StudentForm sForm = new StudentForm();
                 sForm.initFromStudent(s);
                 sForm.setGroups(groups);
