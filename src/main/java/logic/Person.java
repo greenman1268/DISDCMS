@@ -4,6 +4,8 @@ package logic;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class Person implements Comparable
 
@@ -12,7 +14,7 @@ public class Person implements Comparable
     private String firstName;
     private String surName;
     private String patronymic;
-    private BirthDay birthDay = new BirthDay();
+    private java.util.Date birthDay;
     private char sex;
     private int departmentId;
     private String position;
@@ -24,49 +26,16 @@ public class Person implements Comparable
         setPatronymic(rs.getString(3));
         setSurName(rs.getString(4));
         setSex(rs.getString(5).charAt(0));
-        setDateOfBirth(rs.getInt(6),rs.getInt(7),rs.getInt(8));
-        setDepartmentId(rs.getInt(9));
-        setPosition(rs.getString(10));
-        setRank(rs.getString(11));
+        setDateOfBirth(rs.getTimestamp(6));
+        setDepartmentId(rs.getInt(7));
+        setPosition(rs.getString(8));
+        setRank(rs.getString(9));
+
     }
 
     public Person() {
     }
 
-    public class BirthDay{
-        private int day;
-        private int month;
-        private int year;
-
-        public int getDay() {
-            return day;
-        }
-
-        public int getMonth() {
-            return month;
-        }
-
-        public int getYear() {
-            return year;
-        }
-
-        public void setDay(int day) {
-            this.day = day;
-        }
-
-        public void setMonth(int month) {
-            this.month = month;
-        }
-
-        public void setYear(int year) {
-            this.year = year;
-        }
-
-        @Override
-        public String toString() {
-            return (day<10?"0"+day:day) + "." + (month<10?"0"+month:month) + "." + year;
-        }
-    }
 
     public void setPersonId(int personId) {
         this.personId = personId;
@@ -84,11 +53,7 @@ public class Person implements Comparable
         this.patronymic = patronymic;
     }
 
-    public void setDateOfBirth(int day, int month, int year) {
-        this.birthDay.day = day;
-        this.birthDay.month = month;
-        this.birthDay.year = year;
-    }
+    public void setDateOfBirth(Timestamp date) { this.birthDay = date; }
 
     public void setSex(char sex) {
         this.sex = sex;
@@ -122,10 +87,7 @@ public class Person implements Comparable
         return patronymic;
     }
 
-    public BirthDay getDateOfBirth() {
-
-        return birthDay;
-    }
+    public java.util.Date getDateOfBirth() { return birthDay; }
 
     public char getSex() {
         return sex;
@@ -146,7 +108,7 @@ public class Person implements Comparable
     public String toString() {
         return personId + " " + surName + " " + firstName + " " + patronymic + " " +
                 "" + sex + " " + position + " " + rank + " "
-                + birthDay
+                + new SimpleDateFormat("yyyy-MM-dd").format(birthDay.getTime())
                 + " " + departmentId;
     }
 

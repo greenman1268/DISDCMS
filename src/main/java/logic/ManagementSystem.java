@@ -96,11 +96,11 @@ public class ManagementSystem {
         Collection persons = new ArrayList();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT person_id, firstName, patronymic, surName, "
-                + "sex, dayOFbirth, monthOFbirth, yearOFbirth, department_id, position_name, rank FROM person ORDER BY surName, firstName, patronymic");
+                + "sex, birthDay, department_id, position_name, rank FROM person ORDER BY surName, firstName, patronymic");
         while (rs.next()) {
             Person st = new Person(rs);
             persons.add(st);
-           // System.out.println(st);
+            System.out.println(st);
         }
         rs.close();
         stmt.close();
@@ -108,19 +108,19 @@ public class ManagementSystem {
     }
 
 
-    public Collection getPersonsFromDepartment(Department dep, int year) throws SQLException {
+    public Collection getPersonsFromDepartment(Department dep, String year) throws SQLException {
         Collection persons = new ArrayList();
         PreparedStatement stmt = con.prepareStatement("SELECT person_id, firstName, patronymic, surName, "
-                + "sex, dayOFbirth, monthOFbirth, yearOFbirth, department_id, position_name, rank FROM person "
-                + "WHERE department_id = ? AND  yearOFbirth = ? "
+                + "sex, birthDay, department_id, position_name, rank FROM person "
+                + "WHERE department_id = ? AND (YEAR(birthDay))= ? "
                 + "ORDER BY surName, firstName, patronymic");
         stmt.setInt(1, dep.getDepartmentId());
-        stmt.setInt(2, year);
+        stmt.setString(2, year);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             Person st = new Person(rs);
             persons.add(st);
-          //  System.out.println(st);
+            System.out.println(st);
         }
         rs.close();
         stmt.close();
@@ -131,7 +131,7 @@ public class ManagementSystem {
     public Person getPersonById(int personId) throws SQLException {
         Person person = null;
         PreparedStatement stmt = con.prepareStatement("SELECT person_id, firstName, patronymic, surName,"
-                 + "sex, dayOFbirth, monthOFbirth, yearOFbirth, department_id, position_name, rank FROM person WHERE person_id = ?");
+                 + "sex, birthDay, department_id, position_name, rank FROM person WHERE person_id = ?");
         stmt.setInt(1, personId);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
@@ -142,58 +142,54 @@ public class ManagementSystem {
         return person;
     }
 
-    public void movePersonsToDepartment(Department oldDepartment, int oldYear, Department newDepartment, int newYear) throws SQLException {
-        PreparedStatement stmt = con.prepareStatement("UPDATE person SET department_id = ?, yearOFbirth = ? "
-                + "WHERE department_id =  ? AND  yearOFbirth = ?");
+    public void movePersonsToDepartment(Department oldDepartment, String oldYear, Department newDepartment, String newYear) throws SQLException {
+        PreparedStatement stmt = con.prepareStatement("UPDATE person SET department_id = ?, birthDay = CONCAT(?,'-',MONTH(birthDay),'-',DAY(birthDay)) "
+                + "WHERE department_id = ? AND  (YEAR(birthDay)) = ?");
         stmt.setInt(1, newDepartment.getDepartmentId());
-        stmt.setInt(2, newYear);
+        stmt.setString(2, newYear);
         stmt.setInt(3, oldDepartment.getDepartmentId());
-        stmt.setInt(4, oldYear);
+        stmt.setString(4, oldYear);
         stmt.execute();
     }
 
-    public void removePersonsFromDepartment(Department dep, int year) throws SQLException {
-        PreparedStatement stmt = con.prepareStatement("DELETE FROM person WHERE department_id = ? AND yearOFbirth = ?");
+    public void removePersonsFromDepartment(Department dep, String year) throws SQLException {
+        PreparedStatement stmt = con.prepareStatement("DELETE FROM person WHERE department_id = ? AND (YEAR(birthDay)) = ?");
         stmt.setInt(1, dep.getDepartmentId());
-        stmt.setInt(2, year);
+        stmt.setString(2, year);
         stmt.execute();
     }
 
     public void insertPerson(Person person) throws SQLException {
         PreparedStatement stmt = con.prepareStatement("INSERT INTO person "
                 + "(person_id, firstName, patronymic, surName,"
-                + "sex, dayOFbirth, monthOFbirth, yearOFbirth, department_id, position_name, rank)"
-                + "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                + "sex, birthDay, department_id, position_name, rank)"
+                + "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         stmt.setInt(1, person.getPersonId());
         stmt.setString(2, person.getFirstName());
         stmt.setString(3, person.getPatronymic());
         stmt.setString(4, person.getSurName());
         stmt.setString(5, new String(new char[]{person.getSex()}));
-        stmt.setInt(6, person.getDateOfBirth().getDay());
-        stmt.setInt(7, person.getDateOfBirth().getMonth());
-        stmt.setInt(8, person.getDateOfBirth().getYear());
-        stmt.setInt(9, person.getDepartmentId());
-        stmt.setString(10, person.getPosition());
-        stmt.setString(11, person.getRank());
+        stmt.setTimestamp(6, new Timestamp(person.getDateOfBirth().getTime()));
+        stmt.setInt(7, person.getDepartmentId());
+        stmt.setString(8, person.getPosition());
+        stmt.setString(9, person.getRank());
         stmt.execute();
     }
 
     public void updatePerson(Person person) throws SQLException {
         PreparedStatement stmt = con.prepareStatement("UPDATE person "
                 + "SET firstName=?, patronymic=?, surName=?,"
-                + "sex=?, dayOFbirth=?, monthOFbirth=?, yearOFbirth=?, department_id=?, position_name=?, rank=? WHERE person_id=?");
+                + "sex=?, birthDay=?, department_id=?, position_name=?, rank=? WHERE person_id=?");
 
         stmt.setString(1, person.getFirstName());
         stmt.setString(2, person.getPatronymic());
         stmt.setString(3, person.getSurName());
         stmt.setString(4, new String(new char[]{person.getSex()}));
-        stmt.setInt(5, person.getDateOfBirth().getDay());
-        stmt.setInt(6, person.getDateOfBirth().getMonth());
-        stmt.setInt(7, person.getDateOfBirth().getYear());
-        stmt.setInt(8, person.getDepartmentId());
-        stmt.setString(9, person.getPosition());
-        stmt.setString(10, person.getRank());
-        stmt.setInt(11, person.getPersonId());
+        stmt.setTimestamp(5, new Timestamp(person.getDateOfBirth().getTime()));
+        stmt.setInt(6, person.getDepartmentId());
+        stmt.setString(7, person.getPosition());
+        stmt.setString(8, person.getRank());
+        stmt.setInt(9, person.getPersonId());
         stmt.execute();
     }
 
@@ -202,7 +198,7 @@ public class ManagementSystem {
         stmt.setInt(1, person.getPersonId());
         stmt.execute();
     }
-/*
+
     public static void main(String[] args) throws Exception {
         ManagementSystem ms = new ManagementSystem();
         ms.getInstance();
@@ -213,24 +209,30 @@ public class ManagementSystem {
         d.setDepartmentId(1);
         //ms.getPersonsFromDepartment(d,1991);
         //System.out.println(ms.getPersonById(2));
-        //ms.movePersonsToDepartment(d,1992,d,1991);
-        //ms.removePersonsFromDepartment(d,1991);
-        *//*Person p = new Person();
-        p.setFirstName("Григорій");
+       /* ms.movePersonsToDepartment(d,"1992",d,"1991");
+        System.out.println("AFTER");*/
+       // ms.getAllPersons();
+       // ms.removePersonsFromDepartment(d,"1991");
+       // System.out.println("AFTER");
+        ms.getAllPersons();
+        Person p = new Person();
+        p.setFirstName("QJIRF");
         p.setSurName("Чаплій");
         p.setPatronymic("Володимирович");
         p.setRank("старший лейтенант");
         p.setSex('Ч');
-        p.setDateOfBirth(11,11,1992);
+        p.setDateOfBirth(Timestamp.valueOf("1992-10-03 00:00:00"));
         p.setDepartmentId(1);
         p.setPersonId(7);
         p.setPosition("інженер відділення інформаційного забезпечення відділу програмного забезпечення ЦІС");
         //ms.updatePerson(p);
+        ms.insertPerson(p);
         ms.getAllPersons();
-        Person p2 = new Person();
+        /*Person p2 = new Person();
         p2.setPersonId(7);
-        ms.deletePerson(p2);*//*
-        ms.getAllPersons();
-    }*/
+        ms.deletePerson(p2);*/
+
+       //ms.getPersonsFromDepartment(d,"1992");
+    }
 }
 
