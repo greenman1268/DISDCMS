@@ -210,7 +210,7 @@ public class ManagementSystem {
         //ms.getPersonsFromDepartment(d,1991);
         //System.out.println(ms.getPersonById(2));
        // ms.movePersonsToDepartment(d,"1992",d,"1991");
-        System.out.println("AFTER");
+       // System.out.println("AFTER");
        // ms.getAllPersons();
        // ms.removePersonsFromDepartment(d,"1991");
        // System.out.println("AFTER");
@@ -221,9 +221,9 @@ public class ManagementSystem {
         p.setPatronymic("Володимирович");
         p.setRank("старший лейтенант");
         p.setSex('Ч');
-        p.setDateOfBirth(Timestamp.valueOf("1992-10-03"));
+        p.setDateOfBirth(Timestamp.valueOf("1992-10-03 00:00:00"));
         p.setDepartmentId(1);
-        p.setPersonId(7);
+
         p.setPosition("інженер відділення інформаційного забезпечення відділу програмного забезпечення ЦІС");
         //ms.updatePerson(p);
         ms.insertPerson(p);

@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 @WebServlet("/edit")
-
 public class PersonFrameServlet extends HttpServlet
 {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -142,7 +141,7 @@ public class PersonFrameServlet extends HttpServlet
         p.setFirstName(req.getParameter("firstName").trim());
         p.setSurName(req.getParameter("surName").trim());
         p.setPatronymic(req.getParameter("patronymic").trim());
-        p.setDateOfBirth(Timestamp.valueOf(req.getParameter("birthDay")));
+        p.setDateOfBirth(Timestamp.valueOf(req.getParameter("birthDay")+" 00:00:00"));
         if (req.getParameter("sex").equals("0")) {
             p.setSex('Ì');
         } else {
