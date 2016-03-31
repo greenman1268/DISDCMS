@@ -26,10 +26,7 @@ public class Department {
         this.amount_people = amount_people;
     }
 
-    public int getDepartmentId() {
-
-        return departmentId;
-    }
+    public int getDepartmentId() { return departmentId;}
 
     public String getNameDepartment() {
         return nameDepartment;

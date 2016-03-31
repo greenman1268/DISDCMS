@@ -199,7 +199,7 @@ public class ManagementSystem {
         stmt.execute();
     }
 
-    public static void main(String[] args) throws Exception {
+  /*  public static void main(String[] args) throws Exception {
         ManagementSystem ms = new ManagementSystem();
         ms.getInstance();
         //ms.getDepartments();
@@ -209,8 +209,8 @@ public class ManagementSystem {
         d.setDepartmentId(1);
         //ms.getPersonsFromDepartment(d,1991);
         //System.out.println(ms.getPersonById(2));
-       /* ms.movePersonsToDepartment(d,"1992",d,"1991");
-        System.out.println("AFTER");*/
+       // ms.movePersonsToDepartment(d,"1992",d,"1991");
+        System.out.println("AFTER");
        // ms.getAllPersons();
        // ms.removePersonsFromDepartment(d,"1991");
        // System.out.println("AFTER");
@@ -221,18 +221,18 @@ public class ManagementSystem {
         p.setPatronymic("Володимирович");
         p.setRank("старший лейтенант");
         p.setSex('Ч');
-        p.setDateOfBirth(Timestamp.valueOf("1992-10-03 00:00:00"));
+        p.setDateOfBirth(Timestamp.valueOf("1992-10-03"));
         p.setDepartmentId(1);
         p.setPersonId(7);
         p.setPosition("інженер відділення інформаційного забезпечення відділу програмного забезпечення ЦІС");
         //ms.updatePerson(p);
         ms.insertPerson(p);
         ms.getAllPersons();
-        /*Person p2 = new Person();
+        Person p2 = new Person();
         p2.setPersonId(7);
-        ms.deletePerson(p2);*/
+        ms.deletePerson(p2);
 
        //ms.getPersonsFromDepartment(d,"1992");
-    }
+    }*/
 }
 
