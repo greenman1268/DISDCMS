@@ -107,15 +107,6 @@ public class PersonFrameServlet extends HttpServlet
         getServletContext().getRequestDispatcher("/MainFrame.jsp").forward(req, resp);
     }
 
-    public void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        processRequest(req, resp);
-    }
-
-    public void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        processRequest(req, resp);
-    }
 
     private void updatePerson(HttpServletRequest req) throws SQLException, ParseException {
         Person p = preparePerson(req);
@@ -151,5 +142,16 @@ public class PersonFrameServlet extends HttpServlet
         p.setPosition(req.getParameter("position").trim());
         p.setRank(req.getParameter("rank").trim());
         return p;
+    }
+
+
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        processRequest(req, resp);
     }
 }

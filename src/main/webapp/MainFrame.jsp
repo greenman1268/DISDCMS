@@ -11,8 +11,8 @@
   <table>
     <tr>
       <%--<td>Год:<input type="text" name="year" value="${form.year}"/><br/></td>--%>
-      <td>Список особового складу:
-        <select name="personId">
+      <td>Список особового складу!:
+        <select name="departmentId">
           <c:forEach var="department" items="${form.departments}">
             <c:choose>
               <c:when test="${department.departmentId==form.departmentId}">
