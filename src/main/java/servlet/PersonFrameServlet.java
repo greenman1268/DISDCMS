@@ -29,16 +29,16 @@ public class PersonFrameServlet extends HttpServlet
 
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        // Установка кодировки для принятия параметров
+        // РЈСЃС‚Р°РЅРѕРІРєР° РєРѕРґРёСЂРѕРІРєРё РґР»СЏ РїСЂРёРЅСЏС‚РёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ
         req.setCharacterEncoding("UTF-8");
         String pId = req.getParameter("personId");
-        // Если пользователь нажал кнопку ОК – тогда мы обновляем данные (добавляем нового студента)
+        // Р•СЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅР°Р¶Р°Р» РєРЅРѕРїРєСѓ РћРљ вЂ“ С‚РѕРіРґР° РјС‹ РѕР±РЅРѕРІР»СЏРµРј РґР°РЅРЅС‹Рµ (РґРѕР±Р°РІР»СЏРµРј РЅРѕРІРѕРіРѕ СЃС‚СѓРґРµРЅС‚Р°)
         if (pId != null && req.getParameter("OK") != null) {
             try {
-                // Если ID студента больше 0, то мы редактируем его данные
+                // Р•СЃР»Рё ID СЃС‚СѓРґРµРЅС‚Р° Р±РѕР»СЊС€Рµ 0, С‚Рѕ РјС‹ СЂРµРґР°РєС‚РёСЂСѓРµРј РµРіРѕ РґР°РЅРЅС‹Рµ
                 if (Integer.parseInt(pId) > 0) {
                     updatePerson(req);
-                } // Иначе это новый студент
+                } // РРЅР°С‡Рµ СЌС‚Рѕ РЅРѕРІС‹Р№ СЃС‚СѓРґРµРЅС‚
                 else {
                     insertPerson(req);
                 }
@@ -50,7 +50,7 @@ public class PersonFrameServlet extends HttpServlet
             }
         }
 
-        // А теперь опять получаем данные для отображения на главной форме
+        // Рђ С‚РµРїРµСЂСЊ РѕРїСЏС‚СЊ РїРѕР»СѓС‡Р°РµРј РґР°РЅРЅС‹Рµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РЅР° РіР»Р°РІРЅРѕР№ С„РѕСЂРјРµ
         String d = req.getParameter("departmentId");
         String nd = req.getParameter("nameDepartment");
         String chd = req.getParameter("chief");
@@ -134,9 +134,9 @@ public class PersonFrameServlet extends HttpServlet
         p.setPatronymic(req.getParameter("patronymic").trim());
         p.setDateOfBirth(Timestamp.valueOf(req.getParameter("birthDay")+" 00:00:00"));
         if (req.getParameter("sex").equals("0")) {
-            p.setSex('М');
+            p.setSex('пїЅ');
         } else {
-            p.setSex('Ж');
+            p.setSex('пїЅ');
         }
         p.setDepartmentId(Integer.parseInt(req.getParameter("departmentId").trim()));
         p.setPosition(req.getParameter("position").trim());

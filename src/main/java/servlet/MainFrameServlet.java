@@ -26,7 +26,7 @@ public class MainFrameServlet extends HttpServlet
 {
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        // Установка кодировки для принятия параметров
+        // РЈСЃС‚Р°РЅРѕРІРєР° РєРѕРґРёСЂРѕРІРєРё РґР»СЏ РїСЂРёРЅСЏС‚РёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ
         req.setCharacterEncoding("UTF-8");
         int answer = 0;
         try {
@@ -35,8 +35,8 @@ public class MainFrameServlet extends HttpServlet
             throw new IOException(sql_e.getMessage());
         }
         if (answer == 1) {
-            // Тут надо сделать вызов другой формы, которая перенаправит сервлет
-            // на другую JSP для ввода данных о новом студенте
+            // РўСѓС‚ РЅР°РґРѕ СЃРґРµР»Р°С‚СЊ РІС‹Р·РѕРІ РґСЂСѓРіРѕР№ С„РѕСЂРјС‹, РєРѕС‚РѕСЂР°СЏ РїРµСЂРµРЅР°РїСЂР°РІРёС‚ СЃРµСЂРІР»РµС‚
+            // РЅР° РґСЂСѓРіСѓСЋ JSP РґР»СЏ РІРІРѕРґР° РґР°РЅРЅС‹С… Рѕ РЅРѕРІРѕРј СЃС‚СѓРґРµРЅС‚Рµ
             try {
                 Person p = new Person();
                 p.setPersonId(0);
@@ -57,8 +57,8 @@ public class MainFrameServlet extends HttpServlet
         }
 
         if (answer == 2) {
-            // Тут надо сделать вызов другой формы, которая перенаправит сервлет
-            // на другую JSP для ввода данных о студенте
+            // РўСѓС‚ РЅР°РґРѕ СЃРґРµР»Р°С‚СЊ РІС‹Р·РѕРІ РґСЂСѓРіРѕР№ С„РѕСЂРјС‹, РєРѕС‚РѕСЂР°СЏ РїРµСЂРµРЅР°РїСЂР°РІРёС‚ СЃРµСЂРІР»РµС‚
+            // РЅР° РґСЂСѓРіСѓСЋ JSP РґР»СЏ РІРІРѕРґР° РґР°РЅРЅС‹С… Рѕ СЃС‚СѓРґРµРЅС‚Рµ
             try {
                 if (req.getParameter("personId") != null) {
                     int pId = Integer.parseInt(req.getParameter("personId"));
@@ -84,7 +84,7 @@ public class MainFrameServlet extends HttpServlet
         String y = req.getParameter("year");
 
         if (answer == 3) {
-            // Здесь мы перемещаем стедунтов в другую группу
+            // Р—РґРµСЃСЊ РјС‹ РїРµСЂРµРјРµС‰Р°РµРј СЃС‚РµРґСѓРЅС‚РѕРІ РІ РґСЂСѓРіСѓСЋ РіСЂСѓРїРїСѓ
             String newDep = req.getParameter("newDepartmentsId");
             String newY = req.getParameter("newYear");
             try {
@@ -93,7 +93,7 @@ public class MainFrameServlet extends HttpServlet
                 Department dep2 = new Department();
                 dep2.setDepartmentId(Integer.parseInt(newDep));
                 ManagementSystem.getInstance().movePersonsToDepartment(dep, y, dep2, newY);
-                // Теперь мы будем показывать группу, куда переместили
+                // РўРµРїРµСЂСЊ РјС‹ Р±СѓРґРµРј РїРѕРєР°Р·С‹РІР°С‚СЊ РіСЂСѓРїРїСѓ, РєСѓРґР° РїРµСЂРµРјРµСЃС‚РёР»Рё
                 d = newDep;
                 y = newY;
             } catch (SQLException sql_e) {
@@ -138,7 +138,7 @@ public class MainFrameServlet extends HttpServlet
         getServletContext().getRequestDispatcher("/MainFrame.jsp").forward(req, resp);
     }
 
-    // Здесь мы проверям какое действие нам надо сделать – и возвращаем ответ
+    // Р—РґРµСЃСЊ РјС‹ РїСЂРѕРІРµСЂСЏРј РєР°РєРѕРµ РґРµР№СЃС‚РІРёРµ РЅР°Рј РЅР°РґРѕ СЃРґРµР»Р°С‚СЊ вЂ“ Рё РІРѕР·РІСЂР°С‰Р°РµРј РѕС‚РІРµС‚
     private int checkAction(HttpServletRequest req) throws SQLException {
         if (req.getParameter("Add") != null) {
             return 1;
@@ -164,7 +164,7 @@ public class MainFrameServlet extends HttpServlet
         return 0;
     }
 
-    // Переопределим стандартные методы
+    // РџРµСЂРµРѕРїСЂРµРґРµР»РёРј СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РјРµС‚РѕРґС‹
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
     }
