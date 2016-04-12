@@ -6,7 +6,6 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,37 +19,11 @@ public class ManagementSystem {
         private static DataSource dataSource;
 
         private ManagementSystem() throws Exception{
-        //connection ver 2
-        /*try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/students";
-            con = DriverManager.getConnection(url, "root", "126874539");
-        } catch (ClassNotFoundException e) {
-            throw new Exception(e);
-        } catch (SQLException e) {
-            throw new Exception(e);
-        }*/
+
     }
 
     public static synchronized ManagementSystem getInstance() throws Exception{
-        //connection ver 1
-        /*if (instance == null) {
-            try {
-                instance = new ManagementSystem();
-                Context ctx = new InitialContext();
-                instance.dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/StudentsDS");
 
-                con = dataSource.getConnection("root","126874539");
-            } catch (NamingException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }}*/
-        //connection ver 2
-        /*  if (instance == null) {
-            instance = new ManagementSystem();
-        }*/
-        //connection ver 3
         if(instance == null){
             instance = new ManagementSystem();
             Properties props = new Properties();
@@ -58,16 +31,13 @@ public class ManagementSystem {
             MysqlDataSource mysqlDS = null;
             try {
 
-                fis = new FileInputStream("db.properties");
-                props.load(fis);
                 mysqlDS = new MysqlDataSource();
-                mysqlDS.setURL(props.getProperty("MYSQL_DB_URL"));
-                mysqlDS.setUser(props.getProperty("MYSQL_DB_USERNAME"));
-                mysqlDS.setPassword(props.getProperty("MYSQL_DB_PASSWORD"));
+                mysqlDS.setURL("jdbc:mysql://localhost:3306/staff");
+                mysqlDS.setUser("root");
+                mysqlDS.setPassword("126874539");
                 instance.dataSource = mysqlDS;
                 con =  dataSource.getConnection();
-            } catch (IOException e) {
-                e.printStackTrace();
+
             }catch (SQLException e) {
                 e.printStackTrace();
             }}
@@ -85,7 +55,7 @@ public class ManagementSystem {
             dep.setChief(rs.getString(3));
             dep.setAmount_people(rs.getInt(4));
             departments.add(dep);
-            System.out.println(dep);
+          //  System.out.println(dep);
         }
         rs.close();
         stmt.close();
@@ -100,7 +70,7 @@ public class ManagementSystem {
         while (rs.next()) {
             Person st = new Person(rs);
             persons.add(st);
-           // System.out.println(st);
+           System.out.println(st);
         }
         rs.close();
         stmt.close();
@@ -108,19 +78,19 @@ public class ManagementSystem {
     }
 
 
-    public Collection getPersonsFromDepartment(Department dep, String year) throws SQLException {
+    public Collection getPersonsFromDepartment(Department dep) throws SQLException {
         Collection persons = new ArrayList();
         PreparedStatement stmt = con.prepareStatement("SELECT person_id, firstName, patronymic, surName, "
                 + "sex, birthDay, department_id, position_name, rank FROM person "
-                + "WHERE department_id = ? AND (YEAR(birthDay))= ? "
+                + "WHERE department_id = ? "
                 + "ORDER BY surName, firstName, patronymic");
         stmt.setInt(1, dep.getDepartmentId());
-        stmt.setString(2, year);
+
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             Person st = new Person(rs);
             persons.add(st);
-            //System.out.println(st);
+           // System.out.println(st);
         }
         rs.close();
         stmt.close();
@@ -136,19 +106,19 @@ public class ManagementSystem {
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             person = new Person(rs);
+            //System.out.println(person);
         }
         rs.close();
         stmt.close();
         return person;
     }
 
-    public void movePersonsToDepartment(Department oldDepartment, String oldYear, Department newDepartment, String newYear) throws SQLException {
-        PreparedStatement stmt = con.prepareStatement("UPDATE person SET department_id = ?, birthDay = CONCAT(?,'-',MONTH(birthDay),'-',DAY(birthDay)) "
-                + "WHERE department_id = ? AND  (YEAR(birthDay)) = ?");
+    public void movePersonsToDepartment(Department oldDepartment, Department newDepartment, String year) throws SQLException {
+        PreparedStatement stmt = con.prepareStatement("UPDATE person SET department_id = ? "
+                + "WHERE department_id = ? AND (YEAR(birthDay))= ? ");
         stmt.setInt(1, newDepartment.getDepartmentId());
-        stmt.setString(2, newYear);
-        stmt.setInt(3, oldDepartment.getDepartmentId());
-        stmt.setString(4, oldYear);
+        stmt.setInt(2, oldDepartment.getDepartmentId());
+        stmt.setString(3, year);
         stmt.execute();
     }
 
@@ -169,7 +139,7 @@ public class ManagementSystem {
         stmt.setString(3, person.getPatronymic());
         stmt.setString(4, person.getSurName());
         stmt.setString(5, new String(new char[]{person.getSex()}));
-        stmt.setTimestamp(6, new Timestamp(person.getDateOfBirth().getTime()));
+        stmt.setDate(6, new java.sql.Date(person.getDateOfBirth().getTimeInMillis()));
         stmt.setInt(7, person.getDepartmentId());
         stmt.setString(8, person.getPosition());
         stmt.setString(9, person.getRank());
@@ -185,7 +155,7 @@ public class ManagementSystem {
         stmt.setString(2, person.getPatronymic());
         stmt.setString(3, person.getSurName());
         stmt.setString(4, new String(new char[]{person.getSex()}));
-        stmt.setTimestamp(5, new Timestamp(person.getDateOfBirth().getTime()));
+        stmt.setDate(5, new java.sql.Date(person.getDateOfBirth().getTimeInMillis()));
         stmt.setInt(6, person.getDepartmentId());
         stmt.setString(7, person.getPosition());
         stmt.setString(8, person.getRank());
@@ -198,12 +168,19 @@ public class ManagementSystem {
         stmt.setInt(1, person.getPersonId());
         stmt.execute();
     }
+  /* public static void main(String[] args) throws Exception {
+       ManagementSystem ms = new ManagementSystem();
+       ms.getInstance();
 
-    public static void main(String[] args) throws Exception {
-        ManagementSystem ms = new ManagementSystem();
-        ms.getInstance();
-        ms.getDepartments();
+       Department dep = new Department();
+       dep.setDepartmentId(1);
+       Department dep2 = new Department();
+       dep2.setDepartmentId(2);
+      // ms.movePersonsToDepartment(dep2,dep,"1992");
+      // ms.removePersonsFromDepartment(dep,"1992");
+     //ms.getPersonsFromDepartment(dep2,"1992");
+      // ms.getPersonById(1);
+   }*/
 
-    }
 }
 

@@ -4,8 +4,8 @@ package logic;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 public class Person implements Comparable
 
@@ -14,7 +14,7 @@ public class Person implements Comparable
     private String firstName;
     private String surName;
     private String patronymic;
-    private java.util.Date birthDay;
+    private GregorianCalendar birthDay = new GregorianCalendar();
     private char sex;
     private int departmentId;
     private String position;
@@ -26,16 +26,13 @@ public class Person implements Comparable
         setPatronymic(rs.getString(3));
         setSurName(rs.getString(4));
         setSex(rs.getString(5).charAt(0));
-        setDateOfBirth(rs.getTimestamp(6));
+        setDateOfBirth(rs.getDate(6));
         setDepartmentId(rs.getInt(7));
         setPosition(rs.getString(8));
         setRank(rs.getString(9));
-
     }
 
-    public Person() {
-    }
-
+    public Person() {}
 
     public void setPersonId(int personId) {
         this.personId = personId;
@@ -53,7 +50,7 @@ public class Person implements Comparable
         this.patronymic = patronymic;
     }
 
-    public void setDateOfBirth(Timestamp date) { this.birthDay = date; }
+    public void setDateOfBirth(java.sql.Date date) { this.birthDay.setTime(date); }
 
     public void setSex(char sex) {
         this.sex = sex;
@@ -87,7 +84,7 @@ public class Person implements Comparable
         return patronymic;
     }
 
-    public java.util.Date getDateOfBirth() { return birthDay; }
+    public GregorianCalendar getDateOfBirth() { return birthDay; }
 
     public char getSex() {
         return sex;

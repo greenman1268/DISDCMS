@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -39,8 +38,7 @@ public class MainFrameServlet extends HttpServlet
             // на другую JSP для ввода данных о новом студенте
             try {
                 Person p = new Person();
-                p.setPersonId(0);
-                p.setDateOfBirth(Timestamp.valueOf("0000-00-00 00:00:00"));
+                p.setDateOfBirth(new java.sql.Date(new java.util.Date().getTime()));
                 Collection departments = ManagementSystem.getInstance().getDepartments();
                 PersonForm pForm = new PersonForm();
                 pForm.initFromPerson(p);
@@ -92,7 +90,7 @@ public class MainFrameServlet extends HttpServlet
                 dep.setDepartmentId(Integer.parseInt(d));
                 Department dep2 = new Department();
                 dep2.setDepartmentId(Integer.parseInt(newDep));
-                ManagementSystem.getInstance().movePersonsToDepartment(dep, y, dep2, newY);
+                ManagementSystem.getInstance().movePersonsToDepartment(dep,dep2,y);
                 // Теперь мы будем показывать группу, куда переместили
                 d = newDep;
                 y = newY;
@@ -119,7 +117,7 @@ public class MainFrameServlet extends HttpServlet
                 Iterator i = departments.iterator();
                 dep = (Department) i.next();
             }
-            Collection persons = ManagementSystem.getInstance().getPersonsFromDepartment(dep, year);
+            Collection persons = ManagementSystem.getInstance().getPersonsFromDepartment(dep);
             form.setDepartmentId(dep.getDepartmentId());
             form.setDepartmentId(dep.getDepartmentId());
             form.setNameDepartment(dep.getNameDepartment());

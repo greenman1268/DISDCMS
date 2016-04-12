@@ -24,10 +24,7 @@ public class MainFrameForm {
         this.amount_people = amount_people;
     }
 
-    public String getNameDepartment() {
-
-        return nameDepartment;
-    }
+    public String getNameDepartment() { return nameDepartment; }
 
     public String getChief() {
         return chief;
@@ -49,10 +46,7 @@ public class MainFrameForm {
         this.persons = persons;
     }
 
-    public int getDepartmentId() {
-
-        return departmentId;
-    }
+    public int getDepartmentId() { return departmentId; }
 
     public Collection getDepartments() {
         return departments;

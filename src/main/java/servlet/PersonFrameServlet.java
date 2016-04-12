@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -29,16 +28,13 @@ public class PersonFrameServlet extends HttpServlet
 
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        // Установка кодировки для принятия параметров
         req.setCharacterEncoding("UTF-8");
         String pId = req.getParameter("personId");
-        // Если пользователь нажал кнопку ОК – тогда мы обновляем данные (добавляем нового студента)
         if (pId != null && req.getParameter("OK") != null) {
             try {
-                // Если ID студента больше 0, то мы редактируем его данные
                 if (Integer.parseInt(pId) > 0) {
                     updatePerson(req);
-                } // Иначе это новый студент
+                }
                 else {
                     insertPerson(req);
                 }
@@ -50,7 +46,6 @@ public class PersonFrameServlet extends HttpServlet
             }
         }
 
-        // А теперь опять получаем данные для отображения на главной форме
         String d = req.getParameter("departmentId");
         String nd = req.getParameter("nameDepartment");
         String chd = req.getParameter("chief");
@@ -91,7 +86,7 @@ public class PersonFrameServlet extends HttpServlet
                 Iterator i = departments.iterator();
                 dep = (Department) i.next();
             }
-            Collection persons = ManagementSystem.getInstance().getPersonsFromDepartment(dep, Integer.toString(year));
+            Collection persons = ManagementSystem.getInstance().getPersonsFromDepartment(dep);
             form.setDepartmentId(dep.getDepartmentId());
             form.setNameDepartment(dep.getNameDepartment());
             form.setChief(dep.getChief());
@@ -132,15 +127,17 @@ public class PersonFrameServlet extends HttpServlet
         p.setFirstName(req.getParameter("firstName").trim());
         p.setSurName(req.getParameter("surName").trim());
         p.setPatronymic(req.getParameter("patronymic").trim());
-        p.setDateOfBirth(Timestamp.valueOf(req.getParameter("birthDay")+" 00:00:00"));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+        java.util.Date date = format.parse(req.getParameter("birthDay"));
+        p.setDateOfBirth(new java.sql.Date(date.getTime()));
         if (req.getParameter("sex").equals("0")) {
-            p.setSex('�');
+            p.setSex('�');
         } else {
-            p.setSex('�');
+            p.setSex('�');
         }
-        p.setDepartmentId(Integer.parseInt(req.getParameter("departmentId").trim()));
-        p.setPosition(req.getParameter("position").trim());
-        p.setRank(req.getParameter("rank").trim());
+       // p.setDepartmentId(Integer.parseInt(req.getParameter("departmentId").trim()));
+       // p.setPosition(req.getParameter("position").trim());
+       // p.setRank(req.getParameter("rank").trim());
         return p;
     }
 
