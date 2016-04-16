@@ -66,7 +66,7 @@ public class ManagementSystem {
         Collection persons = new ArrayList();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT person_id, firstName, patronymic, surName, "
-                + "sex, birthDay, department_id, position_name, rank FROM person ORDER BY surName, firstName, patronymic");
+                + "sex, birthDay, department_id, position_name, rank FROM person ORDER BY person_id");
         while (rs.next()) {
             Person st = new Person(rs);
             persons.add(st);
@@ -83,7 +83,7 @@ public class ManagementSystem {
         PreparedStatement stmt = con.prepareStatement("SELECT person_id, firstName, patronymic, surName, "
                 + "sex, birthDay, department_id, position_name, rank FROM person "
                 + "WHERE department_id = ? "
-                + "ORDER BY surName, firstName, patronymic");
+                + "ORDER BY person_id");
         stmt.setInt(1, dep.getDepartmentId());
 
         ResultSet rs = stmt.executeQuery();

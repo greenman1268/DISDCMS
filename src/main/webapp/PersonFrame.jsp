@@ -3,21 +3,31 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-    <title>Person Edit</title>
+  <title>Person Edit</title>
 </head>
 
 <body>
 <form action="<c:url value="/edit"/>" method="POST">
   <input type="hidden" name="personId" value="${person.personId}"/>
+<style>
+
+
+</style>
   <table>
     <tr>
       <td>Фамілія:</td><td><input type="text" name="surName" value="${person.surName}"/></td>
     </tr>
     <tr>
-      <td>Ім'я:</td><td><input type="text" name="firstName" value="${person.firstName}"/></td>
+      <td>Ім'я:</td><td><input type="text" name="firstName" value="${person.firstName}"></td>
     </tr>
     <tr>
       <td>По батькові:</td><td><input type="text" name="patronymic" value="${person.patronymic}"/></td>
+    </tr>
+    <tr>
+      <td>Звання:</td><td><input type="text" name="rank" value="${person.rank}" /></td>
+    </tr>
+    <tr>
+      <td>Посада:</td><td><input  type="text"  name="position" value="${person.position}" /></td>
     </tr>
     <tr>
       <td>Дата народження:</td><td><input type="text" name="birthDay" value="${person.birthDay}"/></td>
@@ -54,9 +64,7 @@
         </select>
       </td>
     </tr>
-   <%-- <tr>
-      <td>Год обучения:</td><td><input type="text" name="educationYear" value="${student.educationYear}"/></td>
-    </tr>--%>
+
   </table>
   <table>
     <tr>

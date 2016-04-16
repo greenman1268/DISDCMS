@@ -27,15 +27,8 @@ public class MainFrameServlet extends HttpServlet
             throws ServletException, IOException {
         // Установка кодировки для принятия параметров
         req.setCharacterEncoding("UTF-8");
-        int answer = 0;
-        try {
-            answer = checkAction(req);
-        } catch (SQLException sql_e) {
-            throw new IOException(sql_e.getMessage());
-        }
-        if (answer == 1) {
-            // Тут надо сделать вызов другой формы, которая перенаправит сервлет
-            // на другую JSP для ввода данных о новом студенте
+
+        if(req.getParameter("Add") != null){
             try {
                 Person p = new Person();
                 p.setDateOfBirth(new java.sql.Date(new java.util.Date().getTime()));
@@ -54,7 +47,8 @@ public class MainFrameServlet extends HttpServlet
 
         }
 
-        if (answer == 2) {
+       // if (answer == 2) {
+        if(req.getParameter("Edit") != null){
             // Тут надо сделать вызов другой формы, которая перенаправит сервлет
             // на другую JSP для ввода данных о студенте
             try {
@@ -81,7 +75,8 @@ public class MainFrameServlet extends HttpServlet
         String apdp = req.getParameter("amount_people");
         String y = req.getParameter("year");
 
-        if (answer == 3) {
+        //if (answer == 3) {
+        if(req.getParameter("MoveGroup") != null){
             // Здесь мы перемещаем стедунтов в другую группу
             String newDep = req.getParameter("newDepartmentsId");
             String newY = req.getParameter("newYear");
@@ -99,6 +94,19 @@ public class MainFrameServlet extends HttpServlet
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+
+        if(req.getParameter("Delete") != null) {
+            if (req.getParameter("personId") != null) {
+                Person p = new Person();
+                p.setPersonId(Integer.parseInt(req.getParameter("personId")));
+                try {
+                    ManagementSystem.getInstance().deletePerson(p);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
         int departmentId = -1;
         if (d != null) {
@@ -134,32 +142,6 @@ public class MainFrameServlet extends HttpServlet
 
         req.setAttribute("form", form);
         getServletContext().getRequestDispatcher("/MainFrame.jsp").forward(req, resp);
-    }
-
-    // Здесь мы проверям какое действие нам надо сделать – и возвращаем ответ
-    private int checkAction(HttpServletRequest req) throws SQLException {
-        if (req.getParameter("Add") != null) {
-            return 1;
-        }
-        if (req.getParameter("Edit") != null) {
-            return 2;
-        }
-        if (req.getParameter("MoveGroup") != null) {
-            return 3;
-        }
-        if (req.getParameter("Delete") != null) {
-            if (req.getParameter("personId") != null) {
-                Person p = new Person();
-                p.setPersonId(Integer.parseInt(req.getParameter("personId")));
-                try {
-                    ManagementSystem.getInstance().deletePerson(p);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return 0;
-        }
-        return 0;
     }
 
     // Переопределим стандартные методы

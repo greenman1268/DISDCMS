@@ -135,7 +135,7 @@ public class PersonFrameServlet extends HttpServlet
         } else {
             p.setSex('Æ');
         }
-       // p.setDepartmentId(Integer.parseInt(req.getParameter("departmentId").trim()));
+        p.setDepartmentId(Integer.parseInt(req.getParameter("departmentId").trim()));
        // p.setPosition(req.getParameter("position").trim());
        // p.setRank(req.getParameter("rank").trim());
         return p;
