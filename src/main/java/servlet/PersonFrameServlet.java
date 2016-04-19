@@ -128,9 +128,8 @@ public class PersonFrameServlet extends HttpServlet
         p.setFirstName(req.getParameter("firstName").trim());
         p.setSurName(req.getParameter("surName").trim());
         p.setPatronymic(req.getParameter("patronymic").trim());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-        java.util.Date date = format.parse(req.getParameter("birthDay"));
-        p.setBirthDay(new java.sql.Date(date.getTime()));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        p.setBirthDay(new java.sql.Date(sdf.parse(req.getParameter("birthDay")).getTime()));
         if (req.getParameter("sex").equals("0")) {
             p.setSex('×');
         } else {

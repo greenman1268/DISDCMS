@@ -102,7 +102,10 @@ public class Person implements Comparable
         return rank;
     }
 
-    public String btoS(){return new SimpleDateFormat("dd.MM.yyyy").format(birthDay.getTime());}
+    public String btoS(){
+        SimpleDateFormat smt = new SimpleDateFormat("yyyy-MM-dd");
+        smt.setCalendar(birthDay);
+        return smt.format(birthDay.getTime());}
 
     public String toString() {
         return personId + " " + surName + " " + firstName + " " + patronymic + " " +

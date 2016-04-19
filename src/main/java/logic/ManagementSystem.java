@@ -184,7 +184,7 @@ public class ManagementSystem {
         stmt.setInt(1, person.getPersonId());
         stmt.execute();
     }
-   public static void main(String[] args) throws Exception {
+  /* public static void main(String[] args) throws Exception {
        ManagementSystem ms = new ManagementSystem();
        ms.getInstance();
 
@@ -198,7 +198,7 @@ public class ManagementSystem {
       // ms.removePersonsFromDepartment(dep,"1992");
      //ms.getPersonsFromDepartment(dep2,"1992");
       // ms.getPersonById(1);
-   }
+   }*/
 
 }
 

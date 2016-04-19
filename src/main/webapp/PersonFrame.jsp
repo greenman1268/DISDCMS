@@ -29,7 +29,7 @@
       <td>Посада:</td><td><input  type="text"  name="position" value="${person.position}" onkeypress="this.size=this.value.length"/></td>
     </tr>
     <tr>
-      <td>Дата народження:</td><td><input type="text" name="birthDay" value="${person.birthDay}"/></td>
+      <td>Дата народження:</td><td><input type="date" name="birthDay" value="${person.birthDay}"  /></td>
     </tr>
     <tr>
       <td>Стать:</td>
