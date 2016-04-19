@@ -2,6 +2,9 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.*" %>
+<%@ page import="servlet.forms.MainFrameForm" %>
+<%@ page import="logic.ManagementSystem" %>
+<%@ page import="java.sql.SQLException" %>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <html>
 <head>
@@ -12,16 +15,18 @@
 <form action="<c:url value="/main"/>" method="POST">
   <table>
     <tr>
-      <%--<td>Год:<input type="text" name="year" value="${form.year}"/><br/></td>--%>
+<%String s = "";%>
       <td>Відділ:
         <select name="departmentId">
           <c:forEach var="department" items="${form.departments}">
             <c:choose>
               <c:when test="${department.departmentId==form.departmentId}">
-                <option value="${department.departmentId}" selected><c:out value="${department.nameDepartment}"/></option>
+                <option value="${department.departmentId}" selected><c:out value="${department.nameDepartment}" /></option>
+                <% s = request.getParameter("departmentId");%>
               </c:when>
               <c:otherwise>
                 <option value="${department.departmentId}"><c:out value="${department.nameDepartment}"/></option>
+                <% s = request.getParameter("departmentId");%>
               </c:otherwise>
             </c:choose>
           </c:forEach>
@@ -29,10 +34,21 @@
       </td>
       <td><input type="submit" name="getList" value="Обновить"/></td>
     </tr>
-  </table>
+    <tr><td>Начальник</td><td><%
 
-  <table>
-    <td></td><td></td>
+      try {
+       if(s != null) out.print(ManagementSystem.getDepartmentById(Integer.parseInt(s)).getChief());
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    %></td></tr>
+    <tr><td>Кiлькiсть людей</td><td><%
+      try {
+       if(s != null) out.print(ManagementSystem.getDepartmentById(Integer.parseInt(s)).getAmount_people());
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    %></td></tr>
   </table>
 
   <p/>

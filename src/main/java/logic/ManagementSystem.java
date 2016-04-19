@@ -62,6 +62,22 @@ public class ManagementSystem {
         return departments;
     }
 
+    public static Department getDepartmentById(int dep_Id) throws SQLException{
+        Department dep = new Department();
+        PreparedStatement stmt = con.prepareStatement("SELECT dep_id, depName, chief, amount_people FROM department WHERE dep_id = ?");
+        stmt.setInt(1, dep_Id);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            dep.setDepartmentId(rs.getInt(1));
+            dep.setNameDepartment(rs.getString(2));
+            dep.setChief(rs.getString(3));
+            dep.setAmount_people(rs.getInt(4));
+        }
+        rs.close();
+        stmt.close();
+        return dep;
+    }
+
     public Collection getAllPersons() throws SQLException {
         Collection persons = new ArrayList();
         Statement stmt = con.createStatement();
@@ -168,7 +184,7 @@ public class ManagementSystem {
         stmt.setInt(1, person.getPersonId());
         stmt.execute();
     }
-  /* public static void main(String[] args) throws Exception {
+   public static void main(String[] args) throws Exception {
        ManagementSystem ms = new ManagementSystem();
        ms.getInstance();
 
@@ -176,12 +192,13 @@ public class ManagementSystem {
        dep.setDepartmentId(1);
        Department dep2 = new Department();
        dep2.setDepartmentId(2);
-       ms.getAllPersons();
+       System.out.println(getDepartmentById(1).getChief());
+       // ms.getAllPersons();
       // ms.movePersonsToDepartment(dep2,dep,"1992");
       // ms.removePersonsFromDepartment(dep,"1992");
      //ms.getPersonsFromDepartment(dep2,"1992");
       // ms.getPersonById(1);
-   }*/
+   }
 
 }
 

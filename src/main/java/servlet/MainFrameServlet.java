@@ -123,9 +123,10 @@ public class MainFrameServlet extends HttpServlet
             year = y;
         }
         MainFrameForm form = new MainFrameForm();
+        Department dep = null;
         try {
             Collection departments = ManagementSystem.getInstance().getDepartments();
-            Department dep = new Department();
+            dep = new Department();
             dep.setDepartmentId(departmentId);
             if (departmentId == -1) {
                 Iterator i = departments.iterator();
