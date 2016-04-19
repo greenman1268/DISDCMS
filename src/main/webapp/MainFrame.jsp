@@ -1,6 +1,7 @@
 <%-- Date: 31.03.2016 --%>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.*" %>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <html>
 <head>
@@ -30,12 +31,15 @@
     </tr>
   </table>
 
+  <table>
+    <td></td><td></td>
+  </table>
+
   <p/>
   <b>Список особового складу</b>
   <br/>
   <table>
     <tr>
-
       <th>№ <br>з/п</th>
       <th>вiйськове <br>звання</th>
       <th>ФІО</th>
@@ -43,16 +47,15 @@
       <th>рiк народження</th>
 
     </tr>
-    <c:forEach var="person" items="${form.persons}">
+
+    <%int i = 1;%>
+    <c:forEach var="person"  items="${form.persons}">
       <tr>
-        <%--<td></td>--%>
-        <td><input type="checkbox" name="personId" value="${person.personId}"><c:out value="${person.personId}"/></td>
+        <td><input type="checkbox" name="personId" value="${person.personId}"><%out.println(i);i++;%></td>
         <td><c:out value="${person.rank}"/></td>
         <td><c:out value="${person.surName} ${person.firstName} ${person.patronymic}"/></td>
         <td><c:out value="${person.position}"/></td>
-
-        <%--<td><c:out value="${person.birthDay}"/></td>--%>
-
+        <td><c:out value="${person.btoS()}"/></td>
       </tr>
     </c:forEach>
   </table>

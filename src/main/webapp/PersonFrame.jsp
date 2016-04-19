@@ -1,6 +1,8 @@
 <%-- Date: 31.03.2016 --%>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
 <html>
 <head>
   <title>Person Edit</title>
@@ -9,10 +11,7 @@
 <body>
 <form action="<c:url value="/edit"/>" method="POST">
   <input type="hidden" name="personId" value="${person.personId}"/>
-<style>
 
-
-</style>
   <table>
     <tr>
       <td>Фамілія:</td><td><input type="text" name="surName" value="${person.surName}"/></td>
@@ -27,7 +26,7 @@
       <td>Звання:</td><td><input type="text" name="rank" value="${person.rank}" /></td>
     </tr>
     <tr>
-      <td>Посада:</td><td><input  type="text"  name="position" value="${person.position}" /></td>
+      <td>Посада:</td><td><input  type="text"  name="position" value="${person.position}" onkeypress="this.size=this.value.length"/></td>
     </tr>
     <tr>
       <td>Дата народження:</td><td><input type="text" name="birthDay" value="${person.birthDay}"/></td>

@@ -14,7 +14,7 @@ public class Person implements Comparable
     private String firstName;
     private String surName;
     private String patronymic;
-    private GregorianCalendar birthDay = new GregorianCalendar();
+    private java.util.Calendar birthDay = new GregorianCalendar();
     private char sex;
     private int departmentId;
     private String position;
@@ -26,7 +26,7 @@ public class Person implements Comparable
         setPatronymic(rs.getString(3));
         setSurName(rs.getString(4));
         setSex(rs.getString(5).charAt(0));
-        setDateOfBirth(rs.getDate(6));
+        setBirthDay(rs.getDate(6));
         setDepartmentId(rs.getInt(7));
         setPosition(rs.getString(8));
         setRank(rs.getString(9));
@@ -50,7 +50,7 @@ public class Person implements Comparable
         this.patronymic = patronymic;
     }
 
-    public void setDateOfBirth(java.sql.Date date) { this.birthDay.setTime(date); }
+    public void setBirthDay(java.sql.Date date) { this.birthDay.setTime(date); }
 
     public void setSex(char sex) {
         this.sex = sex;
@@ -84,7 +84,7 @@ public class Person implements Comparable
         return patronymic;
     }
 
-    public GregorianCalendar getDateOfBirth() { return birthDay; }
+    public java.util.Calendar getBirthDay() { return birthDay; }
 
     public char getSex() {
         return sex;
@@ -102,10 +102,12 @@ public class Person implements Comparable
         return rank;
     }
 
+    public String btoS(){return new SimpleDateFormat("dd.MM.yyyy").format(birthDay.getTime());}
+
     public String toString() {
         return personId + " " + surName + " " + firstName + " " + patronymic + " " +
                 "" + sex + " " + position + " " + rank + " "
-                + new SimpleDateFormat("yyyy-MM-dd").format(birthDay.getTime())
+                 + btoS()
                 + " " + departmentId;
     }
 

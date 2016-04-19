@@ -27,11 +27,12 @@ public class MainFrameServlet extends HttpServlet
             throws ServletException, IOException {
         // Установка кодировки для принятия параметров
         req.setCharacterEncoding("UTF-8");
-
         if(req.getParameter("Add") != null){
             try {
                 Person p = new Person();
-                p.setDateOfBirth(new java.sql.Date(new java.util.Date().getTime()));
+                java.util.Date date = new java.util.Date();
+                date.setTime(100000);
+                p.setBirthDay(new java.sql.Date(date.getTime()));
                 Collection departments = ManagementSystem.getInstance().getDepartments();
                 PersonForm pForm = new PersonForm();
                 pForm.initFromPerson(p);
@@ -98,16 +99,21 @@ public class MainFrameServlet extends HttpServlet
 
         if(req.getParameter("Delete") != null) {
             if (req.getParameter("personId") != null) {
-                Person p = new Person();
-                p.setPersonId(Integer.parseInt(req.getParameter("personId")));
-                try {
-                    ManagementSystem.getInstance().deletePerson(p);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                String[] s = req.getParameterValues("personId");
+                /*System.out.println(Arrays.asList(s));*/
+                Person p;
+                for (int i = 0; i < s.length; i++) {
+                 p = new Person();
+                 p.setPersonId(Integer.parseInt(s[i]));
+                    try {
+                        ManagementSystem.getInstance().deletePerson(p);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
         }
+
         int departmentId = -1;
         if (d != null) {
             departmentId = Integer.parseInt(d);
@@ -126,7 +132,6 @@ public class MainFrameServlet extends HttpServlet
                 dep = (Department) i.next();
             }
             Collection persons = ManagementSystem.getInstance().getPersonsFromDepartment(dep);
-            form.setDepartmentId(dep.getDepartmentId());
             form.setDepartmentId(dep.getDepartmentId());
             form.setNameDepartment(dep.getNameDepartment());
             form.setChief(dep.getChief());

@@ -70,7 +70,7 @@ public class ManagementSystem {
         while (rs.next()) {
             Person st = new Person(rs);
             persons.add(st);
-           System.out.println(st);
+          // System.out.println(st);
         }
         rs.close();
         stmt.close();
@@ -90,7 +90,7 @@ public class ManagementSystem {
         while (rs.next()) {
             Person st = new Person(rs);
             persons.add(st);
-           // System.out.println(st);
+           //System.out.println(st);
         }
         rs.close();
         stmt.close();
@@ -139,7 +139,7 @@ public class ManagementSystem {
         stmt.setString(3, person.getPatronymic());
         stmt.setString(4, person.getSurName());
         stmt.setString(5, new String(new char[]{person.getSex()}));
-        stmt.setDate(6, new java.sql.Date(person.getDateOfBirth().getTimeInMillis()));
+        stmt.setDate(6, new java.sql.Date(person.getBirthDay().getTimeInMillis()));
         stmt.setInt(7, person.getDepartmentId());
         stmt.setString(8, person.getPosition());
         stmt.setString(9, person.getRank());
@@ -155,7 +155,7 @@ public class ManagementSystem {
         stmt.setString(2, person.getPatronymic());
         stmt.setString(3, person.getSurName());
         stmt.setString(4, new String(new char[]{person.getSex()}));
-        stmt.setDate(5, new java.sql.Date(person.getDateOfBirth().getTimeInMillis()));
+        stmt.setDate(5, new java.sql.Date(person.getBirthDay().getTimeInMillis()));
         stmt.setInt(6, person.getDepartmentId());
         stmt.setString(7, person.getPosition());
         stmt.setString(8, person.getRank());
@@ -176,6 +176,7 @@ public class ManagementSystem {
        dep.setDepartmentId(1);
        Department dep2 = new Department();
        dep2.setDepartmentId(2);
+       ms.getAllPersons();
       // ms.movePersonsToDepartment(dep2,dep,"1992");
       // ms.removePersonsFromDepartment(dep,"1992");
      //ms.getPersonsFromDepartment(dep2,"1992");

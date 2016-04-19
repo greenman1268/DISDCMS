@@ -93,6 +93,7 @@ public class PersonFrameServlet extends HttpServlet
             form.setAmount_people(dep.getAmount_people());
             form.setDepartments(departments);
             form.setPersons(persons);
+
         } catch (SQLException sql_e) {
             throw new IOException(sql_e.getMessage());
         } catch (Exception e){
@@ -129,15 +130,15 @@ public class PersonFrameServlet extends HttpServlet
         p.setPatronymic(req.getParameter("patronymic").trim());
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         java.util.Date date = format.parse(req.getParameter("birthDay"));
-        p.setDateOfBirth(new java.sql.Date(date.getTime()));
+        p.setBirthDay(new java.sql.Date(date.getTime()));
         if (req.getParameter("sex").equals("0")) {
             p.setSex('×');
         } else {
             p.setSex('Æ');
         }
         p.setDepartmentId(Integer.parseInt(req.getParameter("departmentId").trim()));
-       // p.setPosition(req.getParameter("position").trim());
-       // p.setRank(req.getParameter("rank").trim());
+        p.setPosition(req.getParameter("position").trim());
+        p.setRank(req.getParameter("rank").trim());
         return p;
     }
 

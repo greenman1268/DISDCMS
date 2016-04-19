@@ -10,7 +10,7 @@ import java.util.Collection;
 
 public class PersonForm
 {
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.mm.dd");
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
     private int personId;
     private String firstName;
@@ -28,7 +28,7 @@ public class PersonForm
         this.firstName = p.getFirstName();
         this.surName = p.getSurName();
         this.patronymic = p.getPatronymic();
-        this.birthDay = sdf.format(p.getDateOfBirth().getTime());
+        this.birthDay = sdf.format(p.getBirthDay().getTime());
         if (p.getSex() == '×') {
             this.sex = 0;
         } else {
