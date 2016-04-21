@@ -78,23 +78,26 @@ public class MainFrameServlet extends HttpServlet
 
         //if (answer == 3) {
         if(req.getParameter("MoveGroup") != null){
-            // Здесь мы перемещаем стедунтов в другую группу
-            String newDep = req.getParameter("newDepartmentsId");
-            String newY = req.getParameter("newYear");
+            if (req.getParameter("personId") != null){
+            String newDep = req.getParameter("newDepartmentId");
+            String[] s = req.getParameterValues("personId");
+            Department dep,dep2;
+
+            for (int i = 0; i < s.length; i++) {
             try {
-                Department dep = new Department();
+                dep = new Department();
                 dep.setDepartmentId(Integer.parseInt(d));
-                Department dep2 = new Department();
+                dep2 = new Department();
                 dep2.setDepartmentId(Integer.parseInt(newDep));
-                ManagementSystem.getInstance().movePersonsToDepartment(dep,dep2,y);
-                // Теперь мы будем показывать группу, куда переместили
+                ManagementSystem.getInstance().movePersonsToDepartment(dep,dep2,Integer.parseInt(s[i]));
+                /*// Теперь мы будем показывать группу, куда переместили
                 d = newDep;
-                y = newY;
+                y = newY;*/
             } catch (SQLException sql_e) {
                 throw new IOException(sql_e.getMessage());
             }catch (Exception e){
                 e.printStackTrace();
-            }
+            }}}
         }
 
         if(req.getParameter("Delete") != null) {

@@ -129,12 +129,12 @@ public class ManagementSystem {
         return person;
     }
 
-    public void movePersonsToDepartment(Department oldDepartment, Department newDepartment, String year) throws SQLException {
+    public void movePersonsToDepartment(Department oldDepartment, Department newDepartment, int person_Id) throws SQLException {
         PreparedStatement stmt = con.prepareStatement("UPDATE person SET department_id = ? "
-                + "WHERE department_id = ? AND (YEAR(birthDay))= ? ");
+                + "WHERE department_id = ? AND person_id = ? ");
         stmt.setInt(1, newDepartment.getDepartmentId());
         stmt.setInt(2, oldDepartment.getDepartmentId());
-        stmt.setString(3, year);
+        stmt.setInt(3, person_Id);
         stmt.execute();
     }
 

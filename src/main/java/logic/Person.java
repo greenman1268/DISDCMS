@@ -103,7 +103,7 @@ public class Person implements Comparable
     }
 
     public String btoS(){
-        SimpleDateFormat smt = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat smt = new SimpleDateFormat("dd.MM.YYYY");
         smt.setCalendar(birthDay);
         return smt.format(birthDay.getTime());}
 

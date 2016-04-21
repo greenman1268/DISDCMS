@@ -32,23 +32,26 @@
           </c:forEach>
         </select>
       </td>
-      <td><input type="submit" name="getList" value="Обновить"/></td>
+      <td><input type="submit" name="getList" value="Оновити"/></td>
     </tr>
-    <tr><td>Начальник</td><td><%
-
+    <tr><td>Начальник</td><td>
+      <%
       try {
        if(s != null) out.print(ManagementSystem.getDepartmentById(Integer.parseInt(s)).getChief());
       } catch (SQLException e) {
         e.printStackTrace();
       }
-    %></td></tr>
-    <tr><td>Кiлькiсть людей</td><td><%
+    %>
+    </td></tr>
+    <tr><td>Кiлькiсть людей</td><td>
+      <%
       try {
        if(s != null) out.print(ManagementSystem.getDepartmentById(Integer.parseInt(s)).getAmount_people());
       } catch (SQLException e) {
         e.printStackTrace();
       }
-    %></td></tr>
+    %>
+    </td></tr>
   </table>
 
   <p/>
@@ -78,28 +81,20 @@
 
   <table>
     <tr>
-      <td><input type="submit" value="Add" name="Add"/></td>
-      <td><input type="submit" value="Edit" name="Edit"/></td>
-      <td><input type="submit" value="Delete" name="Delete"/></td>
+      <td>
+        <select name="newDepartmentId">
+          <c:forEach var="department" items="${form.departments}">
+            <option value="${department.departmentId}"><c:out value="${department.nameDepartment}"/></option>
+          </c:forEach>
+        </select>
+      </td>
+      <td><input type="submit" name="MoveGroup" value="Перемістити"/></td>
+      <td><input type="submit" value="Добавити" name="Add"/></td>
+      <td><input type="submit" value="Змiнити" name="Edit"/></td>
+      <td><input type="submit" value="Видалити" name="Delete"/></td>
     </tr>
+    </table>
   </table>
-
-  <%--<p/>--%>
-  <%--<b>Перемістити особовий склад до відділу</b>--%>
-  <%--<br/>--%>
-  <%--<table>--%>
-    <%--<tr>--%>
-      <%--&lt;%&ndash;<td>Рік:<input type="text" name="newYear" value="${form.year}"/><br/></td>&ndash;%&gt;--%>
-      <%--<td>Список відділів:--%>
-        <%--<select name="newDepartmentId">--%>
-          <%--<c:forEach var="department" items="${form.departments}">--%>
-            <%--<option value="${department.departmentId}"><c:out value="${department.nameDepartment}"/></option>--%>
-          <%--</c:forEach>--%>
-        <%--</select>--%>
-      <%--</td>--%>
-      <%--<td><input type="submit" name="MoveGroup" value="Перемістити"/></td>--%>
-    <%--</tr>--%>
-  <%--</table>--%>
 </form>
 </div>
 </body>
