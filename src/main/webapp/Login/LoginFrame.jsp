@@ -14,17 +14,13 @@
 </head>
 <body>
 
-
-    <div class="container">
-      <div class="login">
+    <div align="center" class="container">
         <h1>Login</h1>
         <form action="<c:url value="/login"/>" method="POST">
-          <p><input type="text" name="username" value="" placeholder="username"></p>
-          <p><input type="password" name="password" value="" placeholder="Password"></p>
-
-          <p> <label class="submit"><input type="submit" name="Submit" value="Submit"></label>&nbsp;&nbsp;&nbsp;&nbsp;<label ><input type="submit" value="Cancel" name="Cancel"></label></p>
+          <p><input class="insetreg" type="text" name="username" value="" placeholder="username"></p>
+          <p><input class="insetreg" type="password" name="password" value="" placeholder="Password"></p>
+          <p> <label><input class="loginbtn" type="submit" name="Submit" value="Submit"></label>&nbsp;&nbsp;&nbsp;&nbsp;<label><input class="loginbtn" type="submit" value="Cancel" name="Cancel"></label></p>
         </form>
-      </div>
 
       <script>
         var k = '${error}'
@@ -32,6 +28,5 @@
       </script>
 
 </div>
-
 </body>
 </html>
