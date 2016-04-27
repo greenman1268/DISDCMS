@@ -1,4 +1,4 @@
-package logic;
+package logic.organization;
 
 /**Created on 30.03.2016 */
 
@@ -16,20 +16,24 @@ public class Person implements Comparable
     private String patronymic;
     private java.util.Calendar birthDay = new GregorianCalendar();
     private char sex;
-    private int departmentId;
     private String position;
     private String rank;
+    private int subdivisionId;
+    private int departmentId;
+    private int brunchId;
 
     public Person(ResultSet rs) throws SQLException {
         setPersonId(rs.getInt(1));
         setFirstName(rs.getString(2));
-        setPatronymic(rs.getString(3));
-        setSurName(rs.getString(4));
-        setSex(rs.getString(5).charAt(0));
-        setBirthDay(rs.getDate(6));
-        setDepartmentId(rs.getInt(7));
-        setPosition(rs.getString(8));
-        setRank(rs.getString(9));
+        setSurName(rs.getString(3));
+        setPatronymic(rs.getString(4));
+        setBirthDay(rs.getDate(5));
+        setSex(rs.getString(6).charAt(0));
+        setPosition(rs.getString(7));
+        setRank(rs.getString(8));
+        setSubdivisionId(rs.getInt(9));
+        setDepartmentId(rs.getInt(10));
+        setBrunchId(rs.getInt(11));
     }
 
     public Person() {}
@@ -59,6 +63,11 @@ public class Person implements Comparable
     public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
+
+
+    public void setSubdivisionId(int subdivisionId) { this.subdivisionId = subdivisionId; }
+
+    public void setBrunchId(int brunchId) { this.brunchId = brunchId; }
 
     public void setPosition(String position) {
         this.position = position;
@@ -94,6 +103,10 @@ public class Person implements Comparable
         return departmentId;
     }
 
+    public int getSubdivisionId() { return subdivisionId; }
+
+    public int getBrunchId() { return brunchId;}
+
     public String getPosition() {
         return position;
     }
@@ -108,10 +121,17 @@ public class Person implements Comparable
         return smt.format(birthDay.getTime());}
 
     public String toString() {
-        return personId + " " + surName + " " + firstName + " " + patronymic + " " +
-                "" + sex + " " + position + " " + rank + " "
-                 + btoS()
-                + " " + departmentId;
+        return "subdivisionId: " + subdivisionId +
+                "\ndepartmentId: " + departmentId +
+                "\nbrunchId: " + brunchId +
+                "\npersonId: " + personId +
+                "\nsurName: " + surName +
+                "\nfirstName: " + firstName +
+                "\npatronymic: " + patronymic +
+                "\nsex: " + sex +
+                "\nposition: " + position +
+                "\nrank: " + rank +
+                "\nbirthDay: " + btoS();
     }
 
     public int compareTo(Object obj) {

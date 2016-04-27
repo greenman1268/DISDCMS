@@ -4,9 +4,9 @@ package servlet;
  * Created on 31.03.2016
  */
 
-import logic.Department;
+import logic.organization.Department;
 import logic.ManagementSystem;
-import logic.Person;
+import logic.organization.Person;
 import servlet.forms.MainFrameForm;
 import servlet.forms.PersonForm;
 

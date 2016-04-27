@@ -1,6 +1,6 @@
 package servlet;
 
-import logic.Department;
+import logic.organization.Department;
 import logic.ManagementSystem;
 import servlet.forms.MainFrameForm;
 

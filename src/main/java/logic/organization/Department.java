@@ -1,4 +1,4 @@
-package logic;
+package logic.organization;
 
 /** Created on 30.03.2016 */
 

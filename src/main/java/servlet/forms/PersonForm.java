@@ -3,7 +3,7 @@ package servlet.forms;
 /**
  * Created on 31.03.2016
  */
-import logic.Person;
+import logic.organization.Person;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;

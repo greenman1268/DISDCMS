@@ -3,6 +3,8 @@ package logic;
 /** Created on 30.03.2016 */
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import logic.organization.Department;
+import logic.organization.Person;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
